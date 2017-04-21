@@ -51,20 +51,20 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakes> {
         // Get the {@link AndroidFlavor} object located at this position in the list
         EarthQuakes currentQuake = getItem(position);
 
-        // Find the TextView in the list_item.xml layout with the ID version_name
+        // Find the TextView in the list_item.xml layout with the ID magnitude
         TextView magnitude = (TextView) listItemView.findViewById(R.id.magnitude);
         // Get the version name from the current AndroidFlavor object and
         // set this text on the name TextView
         magnitude.setText(currentQuake.getmMagnitude());
 
-        // Find the TextView in the list_item.xml layout with the ID version_number
+        // Find the TextView in the list_item.xml layout with the ID places
         TextView places = (TextView) listItemView.findViewById(R.id.places);
         // Get the version number from the current AndroidFlavor object and
         // set this text on the number TextView
         places.setText(currentQuake.getmPlace());
 
         TextView date = (TextView) listItemView.findViewById(R.id.date);
-        // Get the version number from the current AndroidFlavor object and
+        // Get the version number from the current EarthQuake object and
         // set this text on the number TextView
         date.setText(currentQuake.getmPlace());
 
