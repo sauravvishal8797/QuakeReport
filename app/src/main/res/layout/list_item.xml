@@ -9,18 +9,21 @@
 
   <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="7.2"
+            android:id="@+id/magnitude"
             android:layout_margin="20dp"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20dp"/>
 
   <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_margin="20dp"
+            android:id="@+id/places"
             android:text="San Francisco"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20dp"/>
 
   <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="FEb 2, 2016"
+            android:id="@+id/date"
             android:layout_margin="20dp"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20dp"/>
