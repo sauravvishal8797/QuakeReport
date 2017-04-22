@@ -6,10 +6,13 @@ package android.example.com.quakereport;
 
 import static java.lang.Long.getLong;
 
+import static android.example.com.quakereport.R.id.magnitude;
+
 import java.util.ArrayList;
 
 import org.json.JSONException;
 
+import android.icu.text.DecimalFormat;
 import android.icu.text.SimpleDateFormat;
 import android.util.Log;
 
@@ -72,7 +75,7 @@ public final class QueryUtils {
             for(int i=0; i<features.length(); i++){
                 JSONObject earthQuakes = features.getJSONObject(i);
                 JSONObject properties = earthQuakes.getJSONObject("properties");
-                String magnitude = (properties.getString("mag"));
+                double magnitude1 = (properties.getDouble("mag"));
                 String place = properties.getString("place");
                 if(place.contains("of")){
                     parts = place.split("of");
@@ -84,7 +87,7 @@ public final class QueryUtils {
                 SimpleDateFormat dateformat = new SimpleDateFormat("MMM DD, YYYY");
                 String DateToDisplay = dateformat.format(date);
 
-                EarthQuakes earthQuake = new EarthQuakes(magnitude, part1, part2, timeinmilliseconds);
+                EarthQuakes earthQuake = new EarthQuakes(magnitude1, part1, part2, timeinmilliseconds);
 
                 earthquakes.add(earthQuake);
 

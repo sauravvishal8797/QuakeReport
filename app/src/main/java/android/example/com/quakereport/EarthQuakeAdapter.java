@@ -1,6 +1,7 @@
 package android.example.com.quakereport;
 
 import android.icu.text.DateFormat;
+import android.icu.text.DecimalFormat;
 import android.icu.text.SimpleDateFormat;
 import android.widget.ArrayAdapter;
 
@@ -62,7 +63,10 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakes> {
         TextView magnitude = (TextView) listItemView.findViewById(R.id.magnitude);
         // Get the version name from the current AndroidFlavor object and
         // set this text on the name TextView
-        magnitude.setText(currentQuake.getmMagnitude());
+        double Magnitude = currentQuake.getmMagnitude();
+        DecimalFormat decimalFormat = new DecimalFormat("0.0");
+        String formattedDecimal = decimalFormat.format(Magnitude);
+        magnitude.setText(formattedDecimal);
 
         // Find the TextView in the list_item.xml layout with the ID places
         TextView places1 = (TextView) listItemView.findViewById(R.id.location1);
