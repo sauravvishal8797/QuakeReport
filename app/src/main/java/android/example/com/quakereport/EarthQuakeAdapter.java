@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.SimpleFormatter;
 
+import static android.example.com.quakereport.R.id.date;
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 /**
@@ -64,14 +65,25 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakes> {
         magnitude.setText(currentQuake.getmMagnitude());
 
         // Find the TextView in the list_item.xml layout with the ID places
-        TextView places = (TextView) listItemView.findViewById(R.id.location);
+        TextView places1 = (TextView) listItemView.findViewById(R.id.location1);
         // Get the version number from the current AndroidFlavor object and
         // set this text on the number TextView
-        places.setText(currentQuake.getmPlace());
+        places1.setText(currentQuake.getmPlace1());
+
+        TextView places2 = (TextView) listItemView.findViewById(R.id.location2);
+        // Get the version number from the current AndroidFlavor object and
+        // set this text on the number TextView
+        places2.setText(currentQuake.getmPlace2());
+
 
         long time = currentQuake.getTimeinmilliseconds();
 
         dateformatted = new Date(currentQuake.getTimeinmilliseconds());
+
+        TextView timeShow = (TextView) listItemView.findViewById(R.id.time);
+
+        String timeFormatted = formatTime(time);
+        timeShow.setText(timeFormatted);
 
         TextView date = (TextView) listItemView.findViewById(R.id.date);
         // Get the version number from the current EarthQuake object and
