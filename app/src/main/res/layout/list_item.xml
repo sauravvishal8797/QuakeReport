@@ -1,31 +1,37 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/list_item">
+    android:orientation="horizontal"
+    android:padding="16dp">
 
+  <TextView
+      android:id="@+id/magnitude"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      tools:text="8.9" />
 
-  <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="7.2"
-            android:id="@+id/magnitude"
-            android:layout_margin="20dp"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="20dp"/>
+  <TextView
+      android:id="@+id/location"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      tools:text="San Francisco, CA" />
 
-  <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:id="@+id/places"
-            android:text="San Francisco"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="20dp"/>
+  <TextView
+      android:id="@+id/date"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      tools:text="Mar 6, 2010" />
 
-  <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="FEb 2, 2016"
-            android:id="@+id/date"
-            android:layout_margin="20dp"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="20dp"/>
+  <TextView
+      android:id="@+id/time"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      tools:text="3:00 PM" />
 
 </LinearLayout>

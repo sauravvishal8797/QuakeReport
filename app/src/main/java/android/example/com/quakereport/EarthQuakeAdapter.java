@@ -1,5 +1,7 @@
 package android.example.com.quakereport;
 
+import android.icu.text.DateFormat;
+import android.icu.text.SimpleDateFormat;
 import android.widget.ArrayAdapter;
 
 /**
@@ -12,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.SimpleFormatter;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
@@ -20,6 +24,8 @@ import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
  */
 
 public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakes> {
+
+    Date dateformatted;
 
 
     public EarthQuakeAdapter(Activity context, ArrayList<EarthQuakes> earthQuakes) {
@@ -58,18 +64,34 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakes> {
         magnitude.setText(currentQuake.getmMagnitude());
 
         // Find the TextView in the list_item.xml layout with the ID places
-        TextView places = (TextView) listItemView.findViewById(R.id.places);
+        TextView places = (TextView) listItemView.findViewById(R.id.location);
         // Get the version number from the current AndroidFlavor object and
         // set this text on the number TextView
         places.setText(currentQuake.getmPlace());
 
+        long time = currentQuake.getTimeinmilliseconds();
+
+        dateformatted = new Date(currentQuake.getTimeinmilliseconds());
+
         TextView date = (TextView) listItemView.findViewById(R.id.date);
         // Get the version number from the current EarthQuake object and
         // set this text on the number TextView
-        date.setText(currentQuake.getmPlace());
+        String formatteddate = formatDate(dateformatted);
+        date.setText(formatteddate);
 
         return listItemView;
 
+    }
+
+    private String formatDate(Date dateformatted) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("LLL ddd, yyy");
+        return dateFormat.format(dateformatted);
+
+    }
+
+    private String formatTime(long milliseconds){
+        SimpleDateFormat timeformatted = new SimpleDateFormat("h:mm aa");
+        return timeformatted.format(dateformatted);
     }
 
 }

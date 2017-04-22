@@ -9,6 +9,8 @@ import static java.lang.Long.getLong;
 import java.util.ArrayList;
 
 import org.json.JSONException;
+
+import android.icu.text.SimpleDateFormat;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -16,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.util.Log;
 
@@ -65,11 +68,14 @@ public final class QueryUtils {
             for(int i=0; i<features.length(); i++){
                 JSONObject earthQuakes = features.getJSONObject(i);
                 JSONObject properties = earthQuakes.getJSONObject("properties");
-                String magnitude = (earthQuakes.getString("mag"));
-                String place = earthQuakes.getString("place");
-                String time = earthQuakes.getString("time");
+                String magnitude = (properties.getString("mag"));
+                String place = properties.getString("place");
+                long timeinmilliseconds = properties.getLong("time");
+                Date date = new Date(timeinmilliseconds);
+                SimpleDateFormat dateformat = new SimpleDateFormat("MMM DD, YYYY");
+                String DateToDisplay = dateformat.format(date);
 
-                EarthQuakes earthQuake = new EarthQuakes(magnitude, place, time);
+                EarthQuakes earthQuake = new EarthQuakes(magnitude, place, timeinmilliseconds);
 
                 earthquakes.add(earthQuake);
 
