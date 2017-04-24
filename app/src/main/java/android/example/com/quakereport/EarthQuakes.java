@@ -10,13 +10,15 @@ public class EarthQuakes {
     private String mPlace1;
     private String mPlace2;
     private long mtimeinmilliseconds;
+    private String mUrl;
 
-    public EarthQuakes(double Magnitude, String Place1, String Place2, long timeinmilliseconds){
+    public EarthQuakes(double Magnitude, String Place1, String Place2, long timeinmilliseconds, String Url){
 
         mMagnitude = Magnitude;
         mPlace1 = Place1;
         mPlace2 = Place2;
         mtimeinmilliseconds = timeinmilliseconds;
+        mUrl = Url;
     }
 
     public double getmMagnitude(){
@@ -33,5 +35,9 @@ public class EarthQuakes {
 
     public long getTimeinmilliseconds(){
         return mtimeinmilliseconds;
+    }
+
+    public String getmUrl(){
+        return mUrl;
     }
 }

@@ -6,6 +6,7 @@ package android.example.com.quakereport;
 
 import static java.lang.Long.getLong;
 
+import static android.example.com.quakereport.R.color.magnitude1;
 import static android.example.com.quakereport.R.id.magnitude;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public final class QueryUtils {
     private static String[] parts;
     private static String part1;
     private static String part2;
+    private static final String LOCATION_SEPARATOR = " of ";
 
     /** Sample JSON response for a USGS query */
     private static final String SAMPLE_JSON_RESPONSE = "{\"type\":\"FeatureCollection\",\"metadata\":{\"generated\":1462295443000,\"url\":\"http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2016-01-01&endtime=2016-01-31&minmag=6&limit=10\",\"title\":\"USGS Earthquakes\",\"status\":200,\"api\":\"1.5.2\",\"limit\":10,\"offset\":1,\"count\":10},\"features\":[{\"type\":\"Feature\",\"properties\":{\"mag\":0.2,\"place\":\"88km N of Yelizovo, Russia\",\"time\":1454124312220,\"updated\":1460674294040,\"tz\":720,\"url\":\"http://earthquake.usgs.gov/earthquakes/eventpage/us20004vvx\",\"detail\":\"http://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us20004vvx&format=geojson\",\"felt\":2,\"cdi\":3.4,\"mmi\":5.82,\"alert\":\"green\",\"status\":\"reviewed\",\"tsunami\":1,\"sig\":798,\"net\":\"us\",\"code\":\"20004vvx\",\"ids\":\",at00o1qxho,pt16030050,us20004vvx,gcmt20160130032510,\",\"sources\":\",at,pt,us,gcmt,\",\"types\":\",cap,dyfi,finite-fault,general-link,general-text,geoserve,impact-link,impact-text,losspager,moment-tensor,nearby-cities,origin,phase-data,shakemap,tectonic-summary,\",\"nst\":null,\"dmin\":0.958,\"rms\":1.19,\"gap\":17,\"magType\":\"mww\",\"type\":\"earthquake\",\"title\":\"M 7.2 - 88km N of Yelizovo, Russia\"},\"geometry\":{\"type\":\"Point\",\"coordinates\":[158.5463,53.9776,177]},\"id\":\"us20004vvx\"},\n" +
@@ -76,10 +78,11 @@ public final class QueryUtils {
                 JSONObject earthQuakes = features.getJSONObject(i);
                 JSONObject properties = earthQuakes.getJSONObject("properties");
                 double magnitude1 = (properties.getDouble("mag"));
+                String url = properties.getString("url");
                 String place = properties.getString("place");
-                if(place.contains("of")){
-                    parts = place.split("of");
-                    part1 = parts[0];
+                if(place.contains(LOCATION_SEPARATOR)){
+                    parts = place.split(LOCATION_SEPARATOR);
+                    part1 = parts[0] + LOCATION_SEPARATOR;
                     part2 = parts[1];
                 }
                 long timeinmilliseconds = properties.getLong("time");
@@ -87,7 +90,7 @@ public final class QueryUtils {
                 SimpleDateFormat dateformat = new SimpleDateFormat("MMM DD, YYYY");
                 String DateToDisplay = dateformat.format(date);
 
-                EarthQuakes earthQuake = new EarthQuakes(magnitude1, part1, part2, timeinmilliseconds);
+                EarthQuakes earthQuake = new EarthQuakes(magnitude1, part1, part2, timeinmilliseconds, url);
 
                 earthquakes.add(earthQuake);
 

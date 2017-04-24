@@ -72,12 +72,12 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakes> {
         magnitude.setText(formattedDecimal);
 
         // Find the TextView in the list_item.xml layout with the ID places
-        TextView places1 = (TextView) listItemView.findViewById(R.id.location1);
+        TextView places1 = (TextView) listItemView.findViewById(R.id.location_offset);
         // Get the version number from the current AndroidFlavor object and
         // set this text on the number TextView
         places1.setText(currentQuake.getmPlace1());
 
-        TextView places2 = (TextView) listItemView.findViewById(R.id.location2);
+        TextView places2 = (TextView) listItemView.findViewById(R.id.primary_location);
         // Get the version number from the current AndroidFlavor object and
         // set this text on the number TextView
         places2.setText(currentQuake.getmPlace2());
