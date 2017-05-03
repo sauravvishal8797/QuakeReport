@@ -27,6 +27,7 @@ import org.json.JSONException;
 
 import android.icu.text.DecimalFormat;
 import android.icu.text.SimpleDateFormat;
+import android.text.TextUtils;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -35,6 +36,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import android.util.Log;
 
@@ -47,11 +49,7 @@ public final class QueryUtils {
     private static String part1;
     private static String part2;
     private static final String LOCATION_SEPARATOR = " of ";
-
-    /** Sample JSON response for a USGS query */
-    private static final String SAMPLE_JSON_RESPONSE = "http://earthquake.usgs" +
-            ".gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=2014-01-02";
-    /**
+   /**
      * Create a private constructor because no one should ever create a {@link QueryUtils} object.
      * This class is only meant to hold static variables and methods, which can be accessed
      * directly from the class name QueryUtils (and an object instance of QueryUtils is not needed).
@@ -63,7 +61,11 @@ public final class QueryUtils {
      * Return a list of {@link EarthQuakes} objects that has been built up from
      * parsing a JSON response.
      */
-    public static ArrayList<EarthQuakes> extractEarthquakes() {
+    public static ArrayList<EarthQuakes> extractEarthquakes(String JsonResponse) {
+
+        if(TextUtils.isEmpty(JsonResponse)){
+            return null;
+        }
 
         // Create an empty ArrayList that we can start adding earthquakes to
         ArrayList<EarthQuakes> earthquakes = new ArrayList<>();
@@ -75,7 +77,7 @@ public final class QueryUtils {
 
             // TODO: Parse the response given by the SAMPLE_JSON_RESPONSE string and
             // build up a list of Earthquake objects with the corresponding data.
-            JSONObject root = new JSONObject(SAMPLE_JSON_RESPONSE);
+            JSONObject root = new JSONObject(JsonResponse);
             JSONArray features = root.getJSONArray("features");
             for(int i=0; i<features.length(); i++){
                 JSONObject earthQuakes = features.getJSONObject(i);
@@ -110,6 +112,25 @@ public final class QueryUtils {
 
         // Return the list of earthquakes
         return earthquakes;
+    }
+
+    public static List<EarthQuakes> fetchEarthQuakes(String RequestUrl){
+
+        URL url = CreateUrl(RequestUrl);
+
+        String JsonREsponse = null;
+
+        try{
+            JsonREsponse = makeHttprequest(url);
+
+        }catch(IOException e){
+            Log.e(LOG_TAG, "PROBLEM MAKING HTTPREQUEST.", e);
+        }
+
+        List<EarthQuakes> earthQuakes = extractEarthquakes(JsonREsponse);
+
+        return earthQuakes;
+
     }
 
     private static URL CreateUrl(String RequestUrl){
