@@ -4,6 +4,9 @@ import android.example.com.quakereport.R;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ActionMenuView;
 import android.view.View;
@@ -27,9 +30,6 @@ public class EarthquakeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_earthquake);
 
-        EarthQuakeAsyncTask earthQuakeAsyncTask = new EarthQuakeAsyncTask();
-        earthQuakeAsyncTask.execute(USGS_REQUEST_URL);
-
         // Find a reference to the {@link ListView} in the layout
         ListView earthquakeListView = (ListView) findViewById(R.id.list);
 
@@ -50,23 +50,34 @@ public class EarthquakeActivity extends AppCompatActivity {
         });
     }
 
-    private class EarthQuakeAsyncTask extends AsyncTask<String, Void, List<EarthQuakes>> {
-        @Override protected List<EarthQuakes> doInBackground(String... strings) {
-
-            return QueryUtils.fetchEarthQuakes(strings[0]);
+    private LoaderManager.LoaderCallbacks<List<EarthQuakes>> mLoaderManager = new LoaderManager.LoaderCallbacks<List<EarthQuakes>>() {
+        @Override public Loader<List<EarthQuakes>> onCreateLoader(int id, Bundle args) {
+            return new EarthQuakeLoader(EarthquakeActivity.this, USGS_REQUEST_URL);
         }
 
-        private List<EarthQuakes>
+        @Override public void onLoadFinished(Loader<List<EarthQuakes>> loader, List<EarthQuakes> data) {
 
-        @Override protected void onPostExecute(List<EarthQuakes> earthQuakes) {
             mEarthQuakeAdapter.clear();
-            if(earthQuakes != null && !earthQuakes.isEmpty()){
-                mEarthQuakeAdapter.addAll(earthQuakes);
+
+            if(data != null && !data.isEmpty())
+            {
+                mEarthQuakeAdapter.addAll(data);
+
+
             }
+
+
+
+        }
+
+        };
+
+        @Override public void onLoaderReset(Loader<List<EarthQuakes>> loader) {
+
+            mEarthQuakeAdapter.clear();
 
         }
     }
 
 
 
-}
