@@ -30,6 +30,8 @@ public class EarthquakeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_earthquake);
 
+        getSupportLoaderManager().initLoader(0, null, mLoaderManager);
+
         // Find a reference to the {@link ListView} in the layout
         ListView earthquakeListView = (ListView) findViewById(R.id.list);
 
@@ -50,34 +52,33 @@ public class EarthquakeActivity extends AppCompatActivity {
         });
     }
 
-    private LoaderManager.LoaderCallbacks<List<EarthQuakes>> mLoaderManager = new LoaderManager.LoaderCallbacks<List<EarthQuakes>>() {
-        @Override public Loader<List<EarthQuakes>> onCreateLoader(int id, Bundle args) {
-            return new EarthQuakeLoader(EarthquakeActivity.this, USGS_REQUEST_URL);
-        }
+    private LoaderManager.LoaderCallbacks<List<EarthQuakes>> mLoaderManager =
+            new LoaderManager.LoaderCallbacks<List<EarthQuakes>>() {
+                @Override public Loader<List<EarthQuakes>> onCreateLoader(int id, Bundle args) {
+                    return new EarthQuakeLoader(EarthquakeActivity.this, USGS_REQUEST_URL);
+                }
 
-        @Override public void onLoadFinished(Loader<List<EarthQuakes>> loader, List<EarthQuakes> data) {
+                @Override public void onLoadFinished(Loader<List<EarthQuakes>> loader, List<EarthQuakes> data) {
 
-            mEarthQuakeAdapter.clear();
+                    mEarthQuakeAdapter.clear();
 
-            if(data != null && !data.isEmpty())
-            {
-                mEarthQuakeAdapter.addAll(data);
-
-
-            }
+                    if (data != null && !data.isEmpty()) {
+                        mEarthQuakeAdapter.addAll(data);
 
 
+                    }
 
-        }
 
-        };
+                }
 
-        @Override public void onLoaderReset(Loader<List<EarthQuakes>> loader) {
 
-            mEarthQuakeAdapter.clear();
+                @Override public void onLoaderReset(Loader<List<EarthQuakes>> loader) {
 
-        }
-    }
+                    mEarthQuakeAdapter.clear();
+
+                }
+            };
+}
 
 
 
